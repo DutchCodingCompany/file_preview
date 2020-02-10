@@ -16,7 +16,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  file_picker: ^1.4.3+2
   file_preview:
     path: ../
 
