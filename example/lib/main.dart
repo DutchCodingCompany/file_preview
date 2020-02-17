@@ -27,14 +27,25 @@ class _MyAppState extends State<MyApp> {
                 child: Text("Pick file"),
                 onPressed: () async {
                   File file = await FilePicker.getFile();
-                  final thumbnail = await FilePreview.getThumbnail(file.path);
-                  print("got here");
-                  setState(() {
-                    image = thumbnail;
-                  });
+                  try {
+                    final thumbnail = await FilePreview.getThumbnail(file.path);
+                    setState(() {
+                      image = thumbnail;
+                    });
+                  } catch (e) {
+                    image = Image.asset("");
+                  }
                 },
               ),
-              image != null ? image : Container(),
+              image != null
+                  ? Container(
+                      width: 210,
+                      height: 297,
+                      padding: const EdgeInsets.all(8.0),
+                      color: Colors.pink,
+                      child: image,
+                    )
+                  : Container(),
             ],
           ),
         ),

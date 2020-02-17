@@ -10,30 +10,39 @@ public class SwiftFilePreviewPlugin: NSObject, FlutterPlugin {
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if (call.method == "getThumnail") {
+        if (call.method == "getThumbnail") {
             var filePath = call.arguments as! String
             if #available(iOS 13.0, *) {
-                print("file path: \(filePath)")
-                
                 filePath = filePath.replacingOccurrences(of: " ", with: "%20")
-                
-                let request = QLThumbnailGenerator.Request(fileAt: URL(string: "file://" + filePath)!, size: CGSize(width: 320, height: 400), scale: UIScreen.main.scale, representationTypes: .thumbnail)
-                QLThumbnailGenerator.shared.generateRepresentations(for: request) {
-                    (thumbnail, type, error) in
-                    DispatchQueue.main.async {
-                        if thumbnail == nil || error != nil {
-                            print("error: \(error.debugDescription)")
+                if let url = URL(string: "file://\(filePath)") {
+                    let size =  CGSize(width: 210, height: 297)
+                    getThumbnail(filePath: url, size: size) { data in
+                        if let image = data {
+                            result(image)
                         } else {
-                            print("thumbnail has been generated")
-                            result(FlutterStandardTypedData(bytes:(thumbnail?.uiImage.jpegData(compressionQuality: 1.0))!))
+                            result(FlutterError(code: "404", message: "Could not generate thumbnail", details: nil))
                         }
                     }
+                } else {
+                    result(FlutterError(code: "400", message: "File path not formatted properly", details: nil))
                 }
             } else {
-                // Fallback on earlier versions
+                result(FlutterError(code: "400", message: "Action not supported in this iOS version", details: nil))
             }
-            
-            
+        }
+    }
+    
+    @available(iOS 13.0, *)
+    private func getThumbnail(filePath: URL, size: CGSize, handler: @escaping (FlutterStandardTypedData?) -> Void) -> Void {
+        let request = QLThumbnailGenerator.Request(fileAt: filePath, size: size, scale: UIScreen.main.scale, representationTypes: .all)
+        QLThumbnailGenerator.shared.generateBestRepresentation(for: request) { (thumbnail, error) in
+            debugPrint("thumbnail: \(thumbnail.debugDescription)")
+            if thumbnail == nil {
+                debugPrint("failed to get a thumbnail: \(error.debugDescription)")
+                handler(nil)
+            } else {
+                handler(FlutterStandardTypedData(bytes: (thumbnail?.uiImage.jpegData(compressionQuality: 1.0))!))
+            }
         }
     }
 }

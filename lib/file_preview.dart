@@ -9,8 +9,7 @@ class FilePreview {
 
   static Future<Image> getThumbnail(String filePath) async {
     final Uint8List byteList =
-        await _channel.invokeMethod('getThumnail', filePath);
-    print("got byteList: $byteList");
+        await _channel.invokeMethod('getThumbnail', filePath);
     return Image.memory(byteList);
   }
 
