@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Image image;
+  Widget image;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
