@@ -38,9 +38,4 @@ class FilePreview {
         return Image.network("https://via.placeholder.com/80x100?text=${extension(filePath)}");
     }
   }
-
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:file_preview/file_preview.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('file_preview');
@@ -15,9 +14,5 @@ void main() {
 
   tearDown(() {
     channel.setMockMethodCallHandler(null);
-  });
-
-  test('getPlatformVersion', () async {
-    expect(await FilePreview.platformVersion, '42');
   });
 }
