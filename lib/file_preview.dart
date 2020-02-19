@@ -12,16 +12,6 @@ class FilePreview {
   static const MethodChannel _channel = const MethodChannel('file_preview');
 
   static Future<Widget> getThumbnail(String filePath) async {
-    if (Platform.isIOS) {
-      final Uint8List byteList =
-          await _channel.invokeMethod('getThumbnail', filePath);
-      return Image.memory(byteList);
-    } else {
-      return await previewFactory(filePath);
-    }
-  }
-
-  static Future<Widget> previewFactory(String filePath) async {
     switch (extension(filePath)) {
       case ".pdf":
         final filePreview =
@@ -33,9 +23,15 @@ class FilePreview {
       case ".gif":
         return Image.file(File(filePath));
       default:
-        return Image.network(
-          "https://via.placeholder.com/80x100?text=${extension(filePath)}",
-        );
+        if (Platform.isIOS) {
+          final Uint8List byteList =
+              await _channel.invokeMethod('getThumbnail', filePath);
+          return Image.memory(byteList);
+        } else {
+          return Image.network(
+            "https://via.placeholder.com/80x100?text=${extension(filePath)}",
+          );
+        }
     }
   }
 
