@@ -12,7 +12,7 @@ class FilePreview {
   static const MethodChannel _channel = const MethodChannel('file_preview');
 
   static Future<Widget> getThumbnail(String filePath) async {
-    switch (extension(filePath)) {
+    switch (extension(filePath.toLowerCase())) {
       case ".pdf":
         final filePreview =
             await PdfPreviewer.getPagePreview(filePath: filePath);
