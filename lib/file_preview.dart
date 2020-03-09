@@ -5,8 +5,8 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:path/path.dart' show extension;
-import 'package:pdf_previewer/pdf_previewer.dart';
 
 class FilePreview {
   static const MethodChannel _channel = const MethodChannel('file_preview');
@@ -14,9 +14,11 @@ class FilePreview {
   static Future<Widget> getThumbnail(String filePath) async {
     switch (extension(filePath.toLowerCase())) {
       case ".pdf":
+        final file = await PDFDocument.openFile(filePath);
+        final page = await file.getPage(1);
         final filePreview =
-            await PdfPreviewer.getPagePreview(filePath: filePath);
-        return imageWithBackground(filePreview);
+            await page.render(width: page.width, height: page.height);
+        return Image.memory(filePreview.bytes);
       case ".jpg":
       case ".jpeg":
       case ".png":
@@ -33,15 +35,5 @@ class FilePreview {
           );
         }
     }
-  }
-
-  static Widget imageWithBackground(String imagePath) {
-    return Container(
-      color: Colors.white,
-      child: Image.file(
-        File(imagePath),
-        fit: BoxFit.fitHeight,
-      ),
-    );
   }
 }
