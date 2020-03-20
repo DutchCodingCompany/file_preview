@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:path/path.dart' show extension;
 
 class FilePreview {
@@ -38,7 +38,8 @@ class FilePreview {
       final file = await PDFDocument.openFile(filePath);
       final page = await file.getPage(1);
       final filePreview =
-          await page.render(width: page.width, height: page.height);
+          await page.render(width: page.width, height: page.height, backgroundColor: '#FFFFFF', format: PDFPageFormat.JPEG);
+      await page.close();
       return Image.memory(filePreview.bytes);
     } catch (e) {
       return Image.network(
