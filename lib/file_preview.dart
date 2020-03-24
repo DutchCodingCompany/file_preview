@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:path/path.dart' show extension;
 
 class FilePreview {
@@ -35,11 +35,10 @@ class FilePreview {
 
   static Future generatePDFPreview(String filePath) async {
     try {
-      final file = await PDFDocument.openFile(filePath);
-      final page = await file.getPage(1);
-      final filePreview =
-          await page.render(width: page.width, height: page.height);
-      return Image.memory(filePreview.bytes);
+      final file = await PDFDocument.fromFile(File(filePath));
+      final page = await file.get(page: 1);
+      final image = page.imgPath;
+      return Image.file(File(image));
     } catch (e) {
       return Image.network(
         "https://via.placeholder.com/80x100?text=${extension(filePath)}",

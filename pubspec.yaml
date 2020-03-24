@@ -10,8 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # native_pdf_renderer: ^1.8.1
-  native_pdf_view: ^2.2.0
+  flutter_plugin_pdf_viewer:
+    git:
+      url: git@gitlab.dcc.tools:boilerplates/flutter/pdf-preview.git
 
 dev_dependencies:
   flutter_test:
