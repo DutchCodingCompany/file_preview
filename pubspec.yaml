@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   flutter_plugin_pdf_viewer:
     git:
-      url: git@gitlab.dcc.tools:stijn/flutter_pdf_preview.git
+      url: git@gitlab.dcc.tools:boilerplates/flutter/pdf-preview.git
 
 dev_dependencies:
   flutter_test:
