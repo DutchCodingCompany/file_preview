@@ -5,14 +5,15 @@ author:
 homepage:
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_plugin_pdf_viewer:
-    git:
-      url: https://gitlab+deploy-token-52:LHLqXxzKHKx1U6LwTAJs@gitlab.dcc.tools/boilerplates/flutter/pdf-preview.git
+  #  flutter_plugin_pdf_viewer:
+  #    git:
+  #      url: https://gitlab+deploy-token-52:LHLqXxzKHKx1U6LwTAJs@gitlab.dcc.tools/boilerplates/flutter/pdf-preview.git
+  native_pdf_renderer: ^4.0.1
 
 dev_dependencies:
   flutter_test:

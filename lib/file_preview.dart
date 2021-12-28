@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
+import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:path/path.dart' show extension;
 
 class FilePreview {
@@ -26,23 +26,27 @@ class FilePreview {
               await _channel.invokeMethod('getThumbnail', filePath);
           return Image.memory(byteList);
         } else {
-          return Image.network(
-            "https://via.placeholder.com/80x100?text=${extension(filePath)}",
-          );
+          return _defaultImage(filePath);
         }
     }
   }
 
   static Future generatePDFPreview(String filePath) async {
     try {
-      final file = await PDFDocument.fromFile(File(filePath));
-      final page = await file.get(page: 1);
-      final image = page.imgPath;
-      return Image.file(File(image));
+      final document = await PdfDocument.openFile(filePath);
+      final page = await document.getPage(1);
+      final image = await page.render(width: 80, height: 100);
+      return image != null
+          ? Image.memory(image.bytes)
+          : _defaultImage(filePath);
     } catch (e) {
-      return Image.network(
-        "https://via.placeholder.com/80x100?text=${extension(filePath)}",
-      );
+      return _defaultImage(filePath);
     }
+  }
+
+  static Image _defaultImage(String filePath) {
+    return Image.network(
+      "https://via.placeholder.com/80x100?text=${extension(filePath)}",
+    );
   }
 }
