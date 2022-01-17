@@ -1,7 +1,5 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
-import 'package:file_preview/file_preview.dart';
+import 'package:flutter_file_preview/flutter_file_preview.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,7 +10,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Widget image;
+  Widget? image;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,12 +24,17 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 child: Text("Pick file"),
                 onPressed: () async {
-                  File file = await FilePicker.getFile();
+                  FilePickerResult? file =
+                      await FilePicker.platform.pickFiles();
                   try {
-                    final thumbnail = await FilePreview.getThumbnail(file.path);
-                    setState(() {
-                      image = thumbnail;
-                    });
+                    if (file != null) {
+                      final thumbnail = await FilePreview.getThumbnail(
+                        file.files.first.path!,
+                      );
+                      setState(() {
+                        image = thumbnail;
+                      });
+                    }
                   } catch (e) {
                     image = Image.asset("");
                   }

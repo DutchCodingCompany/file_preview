@@ -1,15 +1,17 @@
-name: file_preview
+name: flutter_file_preview
 description: Generate a thumbnail for a file based on the file extension. Uses the native files previewer on iOS.
 version: 0.0.1
 repository: https://github.com/DutchCodingCompany/file_preview
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
   native_pdf_renderer: ^4.0.1
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:
@@ -17,5 +19,9 @@ dev_dependencies:
 
 flutter:
   plugin:
-    androidPackage: com.dcc.file_preview
-    pluginClass: FilePreviewPlugin
+    platforms:
+      android:
+        package: com.dcc.file_preview
+        pluginClass: FilePreviewPlugin
+      ios:
+        pluginClass: FilePreviewPlugin
