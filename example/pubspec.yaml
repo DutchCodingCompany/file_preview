@@ -1,4 +1,4 @@
-name: flutter_file_preview_example
+name: file_previewer_example
 description: Demonstrates how to use the flutter_file_preview plugin.
 publish_to: 'none'
 version: 0.0.1
@@ -18,7 +18,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   file_picker: ^4.3.2
-  flutter_file_preview:
+  file_previewer:
     path: ../
 
 # For information on the generic Dart part of this file, see the

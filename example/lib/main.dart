@@ -1,5 +1,5 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_file_preview/flutter_file_preview.dart';
+import 'package:file_previewer/file_previewer.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
