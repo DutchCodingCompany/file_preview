@@ -1,14 +1,30 @@
 # file_preview
 
-A new flutter plugin project.
+Can generate an preview image based on the file extension. Uses the native files previewer on iOS.
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+Generate a preview Widget by calling `await FilePreview.getThumbnail(file.path)`.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+* An image file
+<img src="images/screenshot1.png">
+
+* A pdf file
+<img src="images/screenshot2.png">
+
+* A pdf file where a preview cannot be rendered
+<img src="images/screenshot3.png">
+
+## Usage
+
+```dart
+final File file = await FilePicker.getFile();
+try {
+    final thumbnail = await FilePreview.getThumbnail(file.path);
+    setState(() {
+        image = thumbnail;
+    });
+} catch (e) {
+    image = Image.asset("");
+}
+```
