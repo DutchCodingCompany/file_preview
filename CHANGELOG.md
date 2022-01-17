@@ -6,3 +6,6 @@
 
 ## 0.0.2
 * Changed screenshots in readme to URLs
+
+## 0.0.3
+* Changed file name in readme and source files

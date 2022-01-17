@@ -1,6 +1,6 @@
 name: file_previewer
 description: Generate a thumbnail for a file based on the file extension. Uses the native files previewer on iOS.
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/DutchCodingCompany/file_preview
 
 environment:
