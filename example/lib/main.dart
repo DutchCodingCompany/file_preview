@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: Column(
             children: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text("Pick file"),
                 onPressed: () async {
                   File file = await FilePicker.getFile();

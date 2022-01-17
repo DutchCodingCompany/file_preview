@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:file_preview/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,9 @@ import 'package:path/path.dart' show extension;
 class FilePreview {
   static const MethodChannel _channel = const MethodChannel('file_preview');
 
+  /// Create a preview [Image] of a file from a given [filePath]. In case it's an image extension it will invoke the default flutter Image providers,
+  /// in case its a pdf it will invoke the native pdf renderer. For iOS it will try to use the native previewer,
+  /// which is the same preview you would see in the files app on iOS.
   static Future<Widget> getThumbnail(String filePath) async {
     switch (extension(filePath.toLowerCase())) {
       case ".pdf":
@@ -31,6 +35,7 @@ class FilePreview {
     }
   }
 
+  /// Creates a file preview of a .pdf file of the given [filePath]. In case it cannot be properly rendered, invoke [_defaultImage] instead.
   static Future generatePDFPreview(String filePath) async {
     try {
       final document = await PdfDocument.openFile(filePath);
@@ -44,9 +49,8 @@ class FilePreview {
     }
   }
 
+  /// In case a file preview cannot be properly rendered, show a placeholder image with the extension in the center
   static Image _defaultImage(String filePath) {
-    return Image.network(
-      "https://via.placeholder.com/80x100?text=${extension(filePath)}",
-    );
+    return Image.network(placeholderImageUrl(extension(filePath)));
   }
 }
