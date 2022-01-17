@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
                       width: 210,
                       height: 297,
                       padding: const EdgeInsets.all(8.0),
-                      color: Colors.pink,
+                      color: Colors.white,
                       child: image,
                     )
                   : Container(),

@@ -15,15 +15,23 @@ class FilePreview {
   /// Create a preview [Image] of a file from a given [filePath]. In case it's an image extension it will invoke the default flutter Image providers,
   /// in case its a pdf it will invoke the native pdf renderer. For iOS it will try to use the native previewer,
   /// which is the same preview you would see in the files app on iOS.
-  static Future<Widget> getThumbnail(String filePath) async {
+  static Future<Widget> getThumbnail(
+    String filePath, {
+    double? height,
+    double? width,
+  }) async {
     switch (extension(filePath.toLowerCase())) {
       case ".pdf":
-        return await generatePDFPreview(filePath);
+        return await generatePDFPreview(filePath, height: height, width: width);
       case ".jpg":
       case ".jpeg":
       case ".png":
       case ".gif":
-        return Image.file(File(filePath));
+        return Image.file(
+          File(filePath),
+          width: width,
+          height: height,
+        );
       default:
         if (Platform.isIOS) {
           final Uint8List byteList =
@@ -36,11 +44,18 @@ class FilePreview {
   }
 
   /// Creates a file preview of a .pdf file of the given [filePath]. In case it cannot be properly rendered, invoke [_defaultImage] instead.
-  static Future generatePDFPreview(String filePath) async {
+  static Future generatePDFPreview(
+    String filePath, {
+    double? height,
+    double? width,
+  }) async {
     try {
       final document = await PdfDocument.openFile(filePath);
       final page = await document.getPage(1);
-      final image = await page.render(width: 80, height: 100);
+      final image = await page.render(
+        width: width?.toInt() ?? 80,
+        height: height?.toInt() ?? 100,
+      );
       return image != null
           ? Image.memory(image.bytes)
           : _defaultImage(filePath);
