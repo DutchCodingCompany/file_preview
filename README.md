@@ -1,4 +1,4 @@
-# flutter_file_preview
+# file_previewer
 
 Can generate an preview image based on the file extension. Uses the native files previewer on iOS.
 
