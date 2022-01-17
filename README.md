@@ -8,15 +8,15 @@ Generate a preview Widget by calling `await FilePreview.getThumbnail(file.path)`
 
 * An image file
 
-<img src="images/screenshot1.png" height="800">
+<img src="https://raw.githubusercontent.com/DutchCodingCompany/file_preview/7d8f6ce6ddd27befc4506c077592ff55d56c63e6/images/screenshot1.png" height="800">
 
 * A pdf file
 
-<img src="images/screenshot2.png" height="800">
+<img src="https://raw.githubusercontent.com/DutchCodingCompany/file_preview/7d8f6ce6ddd27befc4506c077592ff55d56c63e6/images/screenshot2.png" height="800">
 
 * A pdf file where a preview cannot be rendered
 
-<img src="images/screenshot3.png" height="800">
+<img src="https://raw.githubusercontent.com/DutchCodingCompany/file_preview/7d8f6ce6ddd27befc4506c077592ff55d56c63e6/images/screenshot3.png" height="800">
 
 ## Usage
 
