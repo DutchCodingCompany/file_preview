@@ -1,7 +1,7 @@
 name: file_preview
 description: Generate a thumbnail for a file based on the file extension. Uses the native files previewer on iOS.
-version: 0.0.1+1
-homepage:
+version: 0.0.1
+repository: https://github.com/DutchCodingCompany/file_preview
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
