@@ -53,8 +53,8 @@ class FilePreview {
       final document = await PdfDocument.openFile(filePath);
       final page = await document.getPage(1);
       final image = await page.render(
-        width: width?.toInt() ?? 80,
-        height: height?.toInt() ?? 100,
+        width: width ?? 80,
+        height: height ?? 100,
       );
       return image != null
           ? Image.memory(image.bytes)
