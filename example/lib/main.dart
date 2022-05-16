@@ -2,11 +2,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:file_previewer/file_previewer.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -22,7 +24,7 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: <Widget>[
               TextButton(
-                child: Text("Pick file"),
+                child: const Text("Pick file"),
                 onPressed: () async {
                   FilePickerResult? file =
                       await FilePicker.platform.pickFiles();

@@ -1,4 +1,4 @@
-group 'com.dcc.file_preview'
+group 'com.dcc.file_previewer'
 version '1.0-SNAPSHOT'
 
 buildscript {

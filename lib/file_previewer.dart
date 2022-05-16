@@ -10,7 +10,7 @@ import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:path/path.dart' show extension;
 
 class FilePreview {
-  static const MethodChannel _channel = const MethodChannel('file_preview');
+  static const MethodChannel _channel = MethodChannel('file_preview');
 
   /// Create a preview [Image] of a file from a given [filePath]. In case it's an image extension it will invoke the default flutter Image providers,
   /// in case its a pdf it will invoke the native pdf renderer. For iOS it will try to use the native previewer,

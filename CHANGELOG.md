@@ -15,3 +15,10 @@
 ## 0.0.4
 
 - Updated native pdf renderer depedency
+
+## 0.0.5
+
+- Set min sdk back to 2.12.x
+- Fixed Podspec file name issue (https://github.com/DutchCodingCompany/file_preview/issues/3)
+- Fixed plugin name mismatches
+- Fixed Android embedding
