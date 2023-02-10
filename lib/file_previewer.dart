@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:file_previewer/config.dart';
 import 'package:flutter/cupertino.dart';
