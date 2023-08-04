@@ -1,3 +1,9 @@
+## 0.1.0
+
+- Updated to flutter >= 3.10.0
+- Updated to dart >= 3.0.0
+- Replaced native_pdf_renderer with pdfx (they changed name)
+
 ## 0.0.6
 
 - Updated to kotlin version 1.7.10
