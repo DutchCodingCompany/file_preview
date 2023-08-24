@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> {
                     if (file != null) {
                       final thumbnail = await FilePreview.getThumbnail(
                         file.files.first.path!,
+                        defaultImage: Image.asset('assets/img.png')
                       );
                       setState(() {
                         image = thumbnail;

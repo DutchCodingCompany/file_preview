@@ -5,8 +5,8 @@ import 'package:file_previewer/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pdfx/pdfx.dart';
 import 'package:path/path.dart' show extension;
+import 'package:pdfx/pdfx.dart';
 
 class FilePreview {
   static const MethodChannel _channel = MethodChannel('file_preview');
@@ -18,10 +18,16 @@ class FilePreview {
     String filePath, {
     double? height,
     double? width,
+    Image? defaultImage,
   }) async {
     switch (extension(filePath.toLowerCase())) {
       case ".pdf":
-        return await generatePDFPreview(filePath, height: height, width: width);
+        return await generatePDFPreview(
+          filePath,
+          height: height,
+          width: width,
+          defaultImage: defaultImage,
+        );
       case ".jpg":
       case ".jpeg":
       case ".png":
@@ -37,7 +43,7 @@ class FilePreview {
               await _channel.invokeMethod('getThumbnail', filePath);
           return Image.memory(byteList);
         } else {
-          return _defaultImage(filePath);
+          return defaultImage ?? _defaultImage(filePath);
         }
     }
   }
@@ -47,6 +53,7 @@ class FilePreview {
     String filePath, {
     double? height,
     double? width,
+    Image? defaultImage,
   }) async {
     try {
       final document = await PdfDocument.openFile(filePath);
@@ -57,9 +64,9 @@ class FilePreview {
       );
       return image != null
           ? Image.memory(image.bytes)
-          : _defaultImage(filePath);
+          : defaultImage ?? _defaultImage(filePath);
     } catch (e) {
-      return _defaultImage(filePath);
+      return defaultImage ?? _defaultImage(filePath);
     }
   }
 
