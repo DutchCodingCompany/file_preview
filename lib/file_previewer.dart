@@ -18,7 +18,7 @@ class FilePreview {
     String filePath, {
     double? height,
     double? width,
-    Image? defaultImage,
+    Widget? defaultImage,
   }) async {
     switch (extension(filePath.toLowerCase())) {
       case ".pdf":
@@ -53,7 +53,7 @@ class FilePreview {
     String filePath, {
     double? height,
     double? width,
-    Image? defaultImage,
+    Widget? defaultImage,
   }) async {
     try {
       final document = await PdfDocument.openFile(filePath);
