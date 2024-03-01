@@ -19,6 +19,8 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  assets:
+    - assets/img.png
   plugin:
     platforms:
       android:

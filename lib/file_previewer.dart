@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:file_previewer/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pdfx/pdfx.dart';
 import 'package:path/path.dart' show extension;
+import 'package:pdfx/pdfx.dart';
 
 class FilePreview {
   static const MethodChannel _channel = MethodChannel('file_preview');
@@ -18,10 +17,16 @@ class FilePreview {
     String filePath, {
     double? height,
     double? width,
+    Widget? defaultImage,
   }) async {
     switch (extension(filePath.toLowerCase())) {
       case ".pdf":
-        return await generatePDFPreview(filePath, height: height, width: width);
+        return await generatePDFPreview(
+          filePath,
+          height: height,
+          width: width,
+          defaultImage: defaultImage,
+        );
       case ".jpg":
       case ".jpeg":
       case ".png":
@@ -37,7 +42,7 @@ class FilePreview {
               await _channel.invokeMethod('getThumbnail', filePath);
           return Image.memory(byteList);
         } else {
-          return _defaultImage(filePath);
+          return defaultImage ?? _defaultImage;
         }
     }
   }
@@ -47,6 +52,7 @@ class FilePreview {
     String filePath, {
     double? height,
     double? width,
+    Widget? defaultImage,
   }) async {
     try {
       final document = await PdfDocument.openFile(filePath);
@@ -57,14 +63,17 @@ class FilePreview {
       );
       return image != null
           ? Image.memory(image.bytes)
-          : _defaultImage(filePath);
+          : defaultImage ?? _defaultImage;
     } catch (e) {
-      return _defaultImage(filePath);
+      return defaultImage ?? _defaultImage;
     }
   }
 
-  /// In case a file preview cannot be properly rendered, show a placeholder image with the extension in the center
-  static Image _defaultImage(String filePath) {
-    return Image.network(placeholderImageUrl(extension(filePath)));
-  }
+  /// In case a file preview cannot be properly rendered, and no default image is provided show a placeholder image
+  static Image get _defaultImage => const Image(
+        image: AssetImage(
+          'assets/img.png',
+          package: 'file_previewer',
+        ),
+      );
 }
