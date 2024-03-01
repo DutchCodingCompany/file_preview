@@ -69,6 +69,6 @@ class FilePreview {
     }
   }
 
-  /// In case a file preview cannot be properly rendered, show a placeholder image with the extension in the center
+  /// In case a file preview cannot be properly rendered, and no default image is provided show a placeholder image
   static Image get _defaultImage => Image.asset('assets/img.png');
 }
