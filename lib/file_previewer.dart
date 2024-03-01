@@ -70,5 +70,10 @@ class FilePreview {
   }
 
   /// In case a file preview cannot be properly rendered, and no default image is provided show a placeholder image
-  static Image get _defaultImage => Image.asset('assets/img.png');
+  static Image get _defaultImage => const Image(
+        image: AssetImage(
+          'assets/img.png',
+          package: 'file_previewer',
+        ),
+      );
 }
