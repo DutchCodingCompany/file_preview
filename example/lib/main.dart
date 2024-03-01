@@ -13,6 +13,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Widget? image;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +33,6 @@ class _MyAppState extends State<MyApp> {
                     if (file != null) {
                       final thumbnail = await FilePreview.getThumbnail(
                         file.files.first.path!,
-                        defaultImage: Image.asset('assets/img.png')
                       );
                       setState(() {
                         image = thumbnail;

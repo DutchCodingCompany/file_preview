@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:file_previewer/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,7 +42,7 @@ class FilePreview {
               await _channel.invokeMethod('getThumbnail', filePath);
           return Image.memory(byteList);
         } else {
-          return defaultImage ?? _defaultImage(filePath);
+          return defaultImage ?? _defaultImage;
         }
     }
   }
@@ -64,14 +63,12 @@ class FilePreview {
       );
       return image != null
           ? Image.memory(image.bytes)
-          : defaultImage ?? _defaultImage(filePath);
+          : defaultImage ?? _defaultImage;
     } catch (e) {
-      return defaultImage ?? _defaultImage(filePath);
+      return defaultImage ?? _defaultImage;
     }
   }
 
   /// In case a file preview cannot be properly rendered, show a placeholder image with the extension in the center
-  static Image _defaultImage(String filePath) {
-    return Image.network(placeholderImageUrl(extension(filePath)));
-  }
+  static Image get _defaultImage => Image.asset('assets/img.png');
 }
