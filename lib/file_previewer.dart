@@ -7,11 +7,15 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' show extension;
 import 'package:pdfx/pdfx.dart';
 
+/// Utility class to generate a preview Widget of a file.
 class FilePreview {
   static const MethodChannel _channel = MethodChannel('file_preview');
 
-  /// Create a preview [Image] of a file from a given [filePath]. In case it's an image extension it will invoke the default flutter Image providers,
-  /// in case its a pdf it will invoke the native pdf renderer. For iOS it will try to use the native previewer,
+  /// Create a preview [Image] of a file from a given [filePath].
+  /// In case it's an image extension it will invoke the default
+  /// flutter Image providers,
+  /// in case its a pdf it will invoke the native pdf renderer.
+  /// For iOS it will try to use the native previewer,
   /// which is the same preview you would see in the files app on iOS.
   static Future<Widget> getThumbnail(
     String filePath, {
@@ -20,17 +24,17 @@ class FilePreview {
     Widget? defaultImage,
   }) async {
     switch (extension(filePath.toLowerCase())) {
-      case ".pdf":
-        return await generatePDFPreview(
+      case '.pdf':
+        return generatePDFPreview(
           filePath,
           height: height,
           width: width,
           defaultImage: defaultImage,
         );
-      case ".jpg":
-      case ".jpeg":
-      case ".png":
-      case ".gif":
+      case '.jpg':
+      case '.jpeg':
+      case '.png':
+      case '.gif':
         return Image.file(
           File(filePath),
           width: width,
@@ -38,17 +42,20 @@ class FilePreview {
         );
       default:
         if (Platform.isIOS) {
-          final Uint8List byteList =
-              await _channel.invokeMethod('getThumbnail', filePath);
-          return Image.memory(byteList);
+          final byteList = await _channel.invokeMethod<Uint8List>(
+            'getThumbnail',
+            filePath,
+          );
+          return byteList != null ? Image.memory(byteList) : _defaultImage;
         } else {
           return defaultImage ?? _defaultImage;
         }
     }
   }
 
-  /// Creates a file preview of a .pdf file of the given [filePath]. In case it cannot be properly rendered, invoke [_defaultImage] instead.
-  static Future generatePDFPreview(
+  /// Creates a file preview of a .pdf file of the given [filePath].
+  /// In case it cannot be properly rendered, invoke [_defaultImage] instead.
+  static Future<Widget> generatePDFPreview(
     String filePath, {
     double? height,
     double? width,
@@ -69,7 +76,8 @@ class FilePreview {
     }
   }
 
-  /// In case a file preview cannot be properly rendered, and no default image is provided show a placeholder image
+  /// In case a file preview cannot be properly rendered,
+  /// and no default image is provided show a placeholder image
   static Image get _defaultImage => const Image(
         image: AssetImage(
           'assets/img.png',
