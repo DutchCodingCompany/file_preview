@@ -1,3 +1,12 @@
+## 0.2.0 
+
+* :arrow_up: Updated dependencies
+  * `pdfx` to `2.6.0`
+  * `path` to `1.9.0`
+  * Replaced `flutter_lints` with `very_good_analysis`
+  * dart sdk to `>=3.4.0 <4.0.0`
+  * flutter sdk to `>=3.22.0`
+
 ## 0.1.0
 
 - Updated to flutter >= 3.10.0
