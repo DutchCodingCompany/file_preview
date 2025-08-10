@@ -25,7 +25,19 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
+    namespace "com.dcc.file_previewer" // Added for AGP 8+ compatibility
+    compileSdkVersion 33               // Updated to meet modern Play Store requirements
+
+    compileOptions {
+        // Safe lowest-common-denominator for modern Android builds
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        // Match Java compatibility above to avoid JVM target mismatch errors
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
